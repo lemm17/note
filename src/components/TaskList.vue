@@ -8,8 +8,8 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
   import Task from './Task'
+  import Store from '../store/store.js'
 
   export default {
     name: 'taskList',
@@ -26,9 +26,9 @@
       }
     },
     computed: {
-      ...mapGetters({
-        getTasks: 'getTasks'
-      })
+      getTasks() {
+        return Store.tasks;
+      }
     },
     watch: {
       tasks() {
@@ -51,7 +51,7 @@
     },
     methods: {
       addTask() {
-        this.$store.dispatch('addTask', {
+        Store.addTask({
           'id': this.nextId,
           'sortmode': this.sortmode
         });

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import Store from '../store/store.js'
 
   export default {
     name: 'openTask',
@@ -51,10 +51,12 @@
       }      
     },
     computed: {
-      ...mapGetters({
-        active: 'getActive',
-        tasks: 'getTasks'
-      }),
+      active() {
+        return Store.active;
+      },
+      tasks() {
+        return Store.tasks;
+      },
       activeTask() {
         if (this.active != null) {
           this.editMode = false;
@@ -79,14 +81,14 @@
     },
     methods: {
       saveText() {
-        this.$store.dispatch('saveText', {
+        Store.saveText({
           'id': this.activeTask.id,
           'newText': this.activeTask.description
-        })
+        });
         this.isSave = true;
       },
       removeTask() {
-        this.$store.dispatch('removeTask', this.active);
+        Store.removeTask(this.active);
       }
     }
   }

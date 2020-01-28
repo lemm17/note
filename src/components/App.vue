@@ -9,6 +9,7 @@
   import {mapGetters} from 'vuex'
   import TaskMenu from './TaskMenu'
   import OpenTask from './OpenTask'
+  import Store from '../store/store.js'
 
   export default {
     name: 'app',
@@ -22,7 +23,7 @@
       OpenTask
     },
     created() {
-      this.$store.dispatch('loadTasks');
+      Store.loadTasks();
     }
   }
 </script>

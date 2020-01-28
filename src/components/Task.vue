@@ -27,6 +27,7 @@
 </template>
 
 <script>
+  import Store from '../store/store.js'
 
   export default {
     name: 'task',
@@ -74,10 +75,10 @@
         if (this.newName.length > 0 && this.newName.length <= 80) {
           if (this.task.name !== this.newName) {
             this.$emit('name-changed', this.newName);
-            this.$store.dispatch('changeName', {
+            Store.changeName({
               'id': this.task.id,
               'newName': this.newName
-            });
+            })
             this.hintActive = false;
           }
 
@@ -91,11 +92,11 @@
         this.hintActive = false;
       },
       removeTask() {
-        this.$store.dispatch('removeTask', this.task.id);
+        Store.removeTask(this.task.id);
       },
       openTask() {
         if (!this.editMode)
-          this.$store.dispatch('openTask', this.task.id);
+          Store.openTask(this.task.id);
       }
     },
     directives: {
@@ -114,7 +115,7 @@
       if (this.task.isNew){
         this.editMode = true;
         this.hintActive = true;
-        this.$store.dispatch('openTask', this.task.id);
+        Store.openTask(this.task.id);
         delete this.task.isNew;
       }
     }
